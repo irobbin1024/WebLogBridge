@@ -7,12 +7,24 @@
 //
 
 #import "WLBAppDelegate.h"
+#import "WLBWebLogManager.h"
 
 @implementation WLBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [[WLBWebLogManager sharedManager] startServer];
+    
+    [NSTimer scheduledTimerWithTimeInterval:1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+        static NSInteger i = 0;
+        [[WLBWebLogManager sharedManager] sendLogWithChannel:@"Flurry" content:[NSString stringWithFormat:@"中文Channel is <font color='red'>%@</font> hello world + %ld</br>", @"Flurry", i++]];
+        
+        [[WLBWebLogManager sharedManager] sendLogWithChannel:@"Ali" content:[NSString stringWithFormat:@"Channel is %@ hello world + %ld</br>", @"Ali", i++]];
+    }];
+    
+    
     return YES;
 }
 

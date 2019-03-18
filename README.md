@@ -1,6 +1,6 @@
 # WebLogBridge
 
-[![CI Status](https://img.shields.io/travis/irobbin1024/WebLogBridge.svg?style=flat)](https://travis-ci.org/irobbin1024/WebLogBridge)
+[![CI Status](https://travis-ci.org/irobbin1024/WebLogBridge.svg?branch=master)](https://travis-ci.org/irobbin1024/WebLogBridge)
 [![Version](https://img.shields.io/cocoapods/v/WebLogBridge.svg?style=flat)](https://cocoapods.org/pods/WebLogBridge)
 [![License](https://img.shields.io/cocoapods/l/WebLogBridge.svg?style=flat)](https://cocoapods.org/pods/WebLogBridge)
 [![Platform](https://img.shields.io/cocoapods/p/WebLogBridge.svg?style=flat)](https://cocoapods.org/pods/WebLogBridge)
@@ -9,7 +9,27 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
+## Usage
+
+1. Import Header
+
+   ```objective-c
+   #import "WLBWebLogManager.h"
+   ```
+
+2. Start Server
+
+   ```objective-c
+   [[WLBWebLogManager sharedManager] startServer];
+   ```
+
+3. Send Message
+
+   ```objective-c
+   [[WLBWebLogManager sharedManager] sendLogWithChannel:@"You Channel" content:[NSString stringWithFormat:@"Message"];
+   ```
+
+4. Open Browser，Example `http://192.168.199.196:8086/`
 
 ## Installation
 

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            
+            <script>
+                
+                var datasource = new Array();
+                var keyword_filter;
+                var channel_filter;
+                var channel_list = new Set(["All"]);
+                
+                var int=self.setInterval("loadXMLDoc()",3000);
+                
+                function loadXMLDoc()
+                {
+                    
+                    var xmlhttp;
+                    xmlhttp=new XMLHttpRequest();
+                    
+                    xmlhttp.onreadystatechange=function()
+                    {
+                        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                        {
+                            json = JSON.parse(xmlhttp.responseText);
+                            for(var p in json){
+                                datasource.push(json[p]);
+                                var is_need=true;
+                                if (keyword_filter && json[p].content.indexOf(keyword_filter) == -1) {
+                                    is_need=false;
+                                }
+                                
+                                if (channel_filter && channel_filter!='All' && json[p].channel!=channel_filter) {
+                                    is_need=false;
+                                }
+                                
+                                if (is_need) {
+                                    document.getElementById("log-area").innerHTML="【Channel】" + json[p].channel + ";" + "【Time】" + json[p].time + ";" + json[p].content+document.getElementById("log-area").innerHTML;
+                                }
+                                
+                                setup_channel(json[p].channel);
+                            }
+                            
+                        }
+                    }
+                    
+                    xmlhttp.open("GET","${server_address}get_more_event",true);
+                    xmlhttp.send();
+                }
+            
+            function setup_channel(channel) {
+                var before_size = channel_list.size;
+                channel_list.add(channel);
+                var after_size = channel_list.size;
+                if (before_size != after_size) {
+                    var channel_html="";
+                    for (let item of channel_list.keys()) {
+                        channel_html = channel_html + "<option value='" + item + "'>" + item + "</option>";
+                    }
+                    document.getElementById("channel").innerHTML=channel_html;
+                }
+            }
+            
+            </script>
+            
+            
+            <script>
+                
+            function clearLog() {
+                document.getElementById("log-area").innerHTML='';
+            }
+            
+            function filter() {
+                var channelIndex = document.getElementById("channel").selectedIndex;
+                channel_filter =  document.getElementById("channel").options[channelIndex].text;
+                keyword_filter = document.getElementById("filter").value
+                document.getElementById("filter_info").innerHTML='filter info:'+'channel='+channel_filter+';'+'keyword='+keyword_filter;
+            }
+            
+            function RemoveFilter() {
+                channel_filter='';
+                keyword_filter='';
+                document.getElementById("filter_info").innerHTML='filter info:'+'channel='+channel_filter+';'+'keyword='+keyword_filter;
+            }
+            
+            function pause_pull() {
+                int=window.clearInterval(int);
+            }
+            
+            function resume_pull() {
+                int=window.clearInterval(int);
+                int=self.setInterval("loadXMLDoc()",3000);
+            }
+            </script>
+        </head>
+    <body>
+        Channel<select id='channel'></select>
+        Filter<input id='filter' type="text">
+            
+        <button type="button" onclick="filter()">Filter</button>
+        <button type="button" onclick="remove_filter()">RemoveFilter</button>
+        <button type="button" onclick="pause_pull()">PausePull</button>
+        <button type="button" onclick="resume_pull()">ResumePull</button>
+        <button type="button" onclick="clearLog()">ClearLog</button>
+        <div id='filter_info'>Filter Info:</div>
+        <div id="log-area"></div>
+            
+    </body>
+</html>
+
