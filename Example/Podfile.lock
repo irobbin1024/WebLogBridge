@@ -1,33 +1,25 @@
 PODS:
-  - Expecta (1.0.6)
   - GCDWebServer (3.5.2):
     - GCDWebServer/Core (= 3.5.2)
   - GCDWebServer/Core (3.5.2)
-  - Specta (1.0.7)
-  - WebLogBridge (0.1.0):
+  - WebLogBridge (0.0.1):
     - GCDWebServer
 
 DEPENDENCIES:
-  - Expecta
-  - Specta
   - WebLogBridge (from `../`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Expecta
     - GCDWebServer
-    - Specta
 
 EXTERNAL SOURCES:
   WebLogBridge:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   GCDWebServer: ead88cd14596dd4eae4f5830b8877c87c8728990
-  Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
-  WebLogBridge: e741407e82ca93bbcde8a9d4e2c61334ec278730
+  WebLogBridge: b5753b671e2abe8a480ff7d3f92fda436ee2181e
 
-PODFILE CHECKSUM: 2b68bb4e6a5f1b2538f3c1e38241f26870687f28
+PODFILE CHECKSUM: 62ad925af0fe9ca3b32c633f056679d2e441bb7a
 
 COCOAPODS: 1.6.0
